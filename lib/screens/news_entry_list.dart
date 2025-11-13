@@ -5,6 +5,7 @@ import 'package:football_news/screens/news_detail.dart';
 import 'package:football_news/widgets/news_entry_card.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:football_news/screens/news_detail.dart';
 
 class NewsEntryListPage extends StatefulWidget {
   const NewsEntryListPage({super.key});
@@ -19,7 +20,7 @@ class _NewsEntryListPageState extends State<NewsEntryListPage> {
     // To connect Android emulator with Django on localhost, use URL http://10.0.2.2/
     // If you using chrome,  use URL http://localhost:8000
 
-    final response = await request.get('http://[YOUR_APP_URL]/json/');
+    final response = await request.get('http://10.0.2.2:8000/json/');
 
     // Decode response to json format
     var data = response;
@@ -38,9 +39,7 @@ class _NewsEntryListPageState extends State<NewsEntryListPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('News Entry List'),
-      ),
+      appBar: AppBar(title: const Text('News Entry List')),
       drawer: const LeftDrawer(),
       body: FutureBuilder(
         future: fetchNews(request),
@@ -68,9 +67,8 @@ class _NewsEntryListPageState extends State<NewsEntryListPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => NewsDetailPage(
-                          news: snapshot.data![index],
-                        ),
+                        builder: (context) =>
+                            NewsDetailPage(news: snapshot.data![index]),
                       ),
                     );
                   },

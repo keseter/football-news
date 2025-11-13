@@ -20,7 +20,7 @@ class NewsDetailPage extends StatelessWidget {
       'Sep',
       'Oct',
       'Nov',
-      'Dec'
+      'Dec',
     ];
     return '${date.day} ${months[date.month - 1]} ${date.year}, ${date.hour.toString().padLeft(2, '0')}:${date.minute.toString().padLeft(2, '0')}';
   }
@@ -38,9 +38,9 @@ class NewsDetailPage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // Thumbnail image
-            if (news.thumbnail != null && news.thumbnail!.isNotEmpty)
+            if (news.thumbnail.isNotEmpty)
               Image.network(
-                'http://localhost:8000/proxy-image/?url=${Uri.encodeComponent(news.thumbnail!)}',
+                'http://localhost:8000/proxy-image/?url=${Uri.encodeComponent(news.thumbnail)}',
                 width: double.infinity,
                 height: 250,
                 fit: BoxFit.cover,
@@ -62,7 +62,9 @@ class NewsDetailPage extends StatelessWidget {
                   if (news.isFeatured)
                     Container(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 12.0, vertical: 6.0),
+                        horizontal: 12.0,
+                        vertical: 6.0,
+                      ),
                       margin: const EdgeInsets.only(bottom: 12.0),
                       decoration: BoxDecoration(
                         color: Colors.amber,
@@ -92,7 +94,9 @@ class NewsDetailPage extends StatelessWidget {
                     children: [
                       Container(
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 10.0, vertical: 4.0),
+                          horizontal: 10.0,
+                          vertical: 4.0,
+                        ),
                         decoration: BoxDecoration(
                           color: Colors.indigo.shade100,
                           borderRadius: BorderRadius.circular(12.0),
@@ -109,10 +113,7 @@ class NewsDetailPage extends StatelessWidget {
                       const SizedBox(width: 12),
                       Text(
                         _formatDate(news.createdAt),
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
                   ),
@@ -125,10 +126,7 @@ class NewsDetailPage extends StatelessWidget {
                       const SizedBox(width: 4),
                       Text(
                         '${news.newsViews} views',
-                        style: TextStyle(
-                          fontSize: 12,
-                          color: Colors.grey[600],
-                        ),
+                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
                       ),
                     ],
                   ),
@@ -138,10 +136,7 @@ class NewsDetailPage extends StatelessWidget {
                   // Full content
                   Text(
                     news.content,
-                    style: const TextStyle(
-                      fontSize: 16.0,
-                      height: 1.6,
-                    ),
+                    style: const TextStyle(fontSize: 16.0, height: 1.6),
                     textAlign: TextAlign.justify,
                   ),
                   const SizedBox(height: 24),

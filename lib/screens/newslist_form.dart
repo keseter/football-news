@@ -14,7 +14,6 @@ class NewsFormPage extends StatefulWidget {
 
 class _NewsFormPageState extends State<NewsFormPage> {
   final _formKey = GlobalKey<FormState>();
-
   String _title = "";
   String _content = "";
   String _category = "update"; // default
@@ -33,22 +32,18 @@ class _NewsFormPageState extends State<NewsFormPage> {
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
     return Scaffold(
-        appBar: AppBar(
-          title: const Center(
-            child: Text(
-              'Add News Form',
-            ),
-          ),
-          backgroundColor: Colors.indigo,
-          foregroundColor: Colors.white,
-        ),
-        // TODO left drawer
-        drawer: LeftDrawer(),
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+      appBar: AppBar(
+        title: const Center(child: Text('Add News Form')),
+        backgroundColor: Colors.indigo,
+        foregroundColor: Colors.white,
+      ),
+      drawer: const LeftDrawer(),
+      body: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               // === Title ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -73,7 +68,6 @@ class _NewsFormPageState extends State<NewsFormPage> {
                   },
                 ),
               ),
-
               // === Content ===
               Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -112,11 +106,12 @@ class _NewsFormPageState extends State<NewsFormPage> {
                   ),
                   value: _category,
                   items: _categories
-                      .map((cat) => DropdownMenuItem(
-                            value: cat,
-                            child:
-                                Text(cat[0].toUpperCase() + cat.substring(1)),
-                          ))
+                      .map(
+                        (cat) => DropdownMenuItem(
+                          value: cat,
+                          child: Text(cat[0].toUpperCase() + cat.substring(1)),
+                        ),
+                      )
                       .toList(),
                   onChanged: (String? newValue) {
                     setState(() {
@@ -175,7 +170,7 @@ class _NewsFormPageState extends State<NewsFormPage> {
                         // If you using chrome,  use URL http://localhost:8000
 
                         final response = await request.postJson(
-                          "http://[Your_APP_URL]/create-flutter/",
+                          "http://10.0.2.2:8000/create-flutter/",
                           jsonEncode({
                             "title": _title,
                             "content": _content,
@@ -186,21 +181,25 @@ class _NewsFormPageState extends State<NewsFormPage> {
                         );
                         if (context.mounted) {
                           if (response['status'] == 'success') {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text("News successfully saved!"),
-                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text("News successfully saved!"),
+                              ),
+                            );
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => MyHomePage()),
+                                builder: (context) => MyHomePage(),
+                              ),
                             );
                           } else {
-                            ScaffoldMessenger.of(context)
-                                .showSnackBar(const SnackBar(
-                              content: Text(
-                                  "Something went wrong, please try again."),
-                            ));
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Text(
+                                  "Something went wrong, please try again.",
+                                ),
+                              ),
+                            );
                           }
                         }
                       }
@@ -212,8 +211,10 @@ class _NewsFormPageState extends State<NewsFormPage> {
                   ),
                 ),
               ),
-            ]),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
