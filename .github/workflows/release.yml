@@ -29,8 +29,11 @@ jobs:
       - name: Setup Java
         uses: actions/setup-java@v3
         with:
-          distribution: "zulu"
+          distribution: "temurin"
           java-version: "17"
+      
+      - name: Confirm Java Version
+        run: java -version
 
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
